@@ -1,0 +1,22 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">Username</th>
+      <th scope="col">Hire Date</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees">
+      <th scope="row">employee.name</th>
+      <td>employee.age</td>
+      <td>employee.username</td>
+      <td>employee.hireDate</td>
+      <td>@mdo</td>
+    </tr>
+  </tbody>
+</table>
+<div class="clearfix">&nbsp;</div>
+<a role="button" href="#/New" class="btn btn-primary btn-centered"><i class="material-icons">add</i> add new employee</a>

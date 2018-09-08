@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { EmployeesListComponent } from './employees-list/employees-list.component';
@@ -40,6 +41,8 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
+    HttpModule,
     StoreModule.forRoot({ blockchain: addEmployeeReducer }),
     RouterModule.forRoot(
       routes,

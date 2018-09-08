@@ -10,20 +10,21 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'dropdown',
   template: `
-    <select class="custom-select d-block w-100" id="{{controlName}}" >
-      <option *ngFor="let option of options" value="option">{{option}}</option>
+    <select #select class="custom-select d-block w-100" id="{{controlName}}" (change)="onChange($event, select.value)">
+      <option *ngFor="let option of options" value="{{option}}">{{option}}</option>
     </select>
   `,
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class Dropdown implements ControlValueAccessor, AfterViewInit {
   @Input() controlName: string;
-  @Input() options: any[];
+  options: any[];
   @Input() c: FormControl = new FormControl();
-  @Input() optional: boolean = false;
+  @Input() area: boolean = false;
   errors: Array<any> = ['This field is required'];
-  @ViewChild('input') inputRef: ElementRef; 
+  @ViewChild('select') inputRef: ElementRef; 
   private innerValue: any = '';
+
 
   ngAfterViewInit() {
     this.c.valueChanges.subscribe(
@@ -47,6 +48,22 @@ export class Dropdown implements ControlValueAccessor, AfterViewInit {
     }
   }
 
+  onChange(e: Event, value: any) {
+    this.innerValue = value;
+    this.propagateChange(this.innerValue);
+
+    this.errors = [];
+    for (var key in this.c.errors) {
+      if (this.c.errors.hasOwnProperty(key)) {
+        if (key === "required") {
+          this.errors.push("This field is required");
+        } else {
+          this.errors.push(this.c.errors[key]);
+        }
+      }
+    }
+  }
+
   propagateChange = (_: any) => { }
 
   writeValue(value: any) {
@@ -58,5 +75,16 @@ export class Dropdown implements ControlValueAccessor, AfterViewInit {
     this.propagateChange = fn;
   }
 
-  registerOnTouched(fn: any) {}
+  registerOnTouched(fn: any) { }
+
+  ngOnChanges(changes: any) {
+    if (changes.area != null) {
+      if (changes.area.currentValue) {
+        this.options = ["Manager", "Host", "Tuttofare", "Waitress", "Dinning room manager"];
+      } else {
+        this.options = ["Chef", "Sous chef", "Dishwasher", "Cook"];
+      }
+    }
+
+  }
 }

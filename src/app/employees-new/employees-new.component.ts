@@ -14,28 +14,30 @@ import { CommonService } from '../services/common.services';
 export class EmployeesNewComponent implements OnInit {
   myForm: FormGroup;
   employee: Employee;
-  areas: string[];
   isServices: true;
   countries: string[];
+  maxDate: string = (new Date).toISOString().substring(0, 10);
+  hasTips: boolean;
 
   constructor(private store: Store<AppState>, private fb: FormBuilder, private commonService: CommonService) {
     this.myForm = this.fb.group(
       {
         name: ['', Validators.required],
-        dob: [new Date(), Validators.required],
+        dob: [null , Validators.required],
         jobTitle: ['', Validators.required],
         country: ['', Validators.required],
-        username: ['', Validators.required],
-        hireDate: [new Date(), Validators.required],
-        tipRate: ['', Validators.required],
-        status: ['', Validators.required]
+        username: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')]],
+        hireDate: [null, Validators.required],
+        tipRate: ['', [Validators.required, Validators.max(100), Validators.min(0)]],
+        status: [false, Validators.required]
       },
       {
         validator: [this.validateAge()]
       }
     );
 
-    this.areas = ["Manager", "Host", "Tuttofare"];
+    this.validateTips();
+
     this.commonService.getCountries().then((data) => {
       this.countries = data.map((data) => { return data.name.toString() });
     });
@@ -46,11 +48,11 @@ export class EmployeesNewComponent implements OnInit {
       var dobControl = formGroup.get('dob');
       var dob = new Date(dobControl.value);
       if (this.calculateAge(dob) < 18) {
-        return null;
-      } else {
         return {
-          validAge: true
-        }
+          validAge: false
+        };
+      } else {
+        return null
       }
     };
   }
@@ -66,16 +68,35 @@ export class EmployeesNewComponent implements OnInit {
 
   addEmployee() {
     const dobControl = this.myForm.get('dob');
-    this.employee.age = this.calculateAge(dobControl.value);
-    this.employee.area = this.isServices ? 'Services' : 'Kitchen';
+    var dob = new Date(dobControl.value);
 
     this.store.dispatch({
       type: 'ADD',
-      payload: this.employee
+      payload: {
+        name: this.myForm.get('name').value,
+        area: this.isServices,
+        age: this.calculateAge(dob),
+        jobTitle: this.myForm.get('jobTitle').value,
+        country: this.myForm.get('country').value,
+        username: this.myForm.get('username').value,
+        hireDate: this.myForm.get('hireDate').value,
+        id: 1
+      }
     });
   }
 
-  ngOnInit() {
+  validateTips() {
+    const jobControl = this.myForm.get('jobTitle');
+    this.hasTips = ["Dinning room manager", "Waitress"].includes(jobControl.value);
+    const tipControl = this.myForm.get('tipRate');
+    if (!this.hasTips) {
+      tipControl.clearValidators();
+    } else {
+      tipControl.setValidators(Validators.required);
+    }
+    tipControl.updateValueAndValidity();
   }
+
+  ngOnInit() { }
 
 }

@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   providers: [CommonService]
 })
 export class EmployeesNewComponent implements OnInit {
-  title: strin = "New Employee";
+  title: string = "New Employee";
   myForm: FormGroup;
   isServices: boolean = true;
   countries: string[];

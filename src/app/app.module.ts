@@ -10,6 +10,8 @@ import { EmployeesListComponent } from './employees-list/employees-list.componen
 import { EmployeesNewComponent } from './employees-new/employees-new.component';
 import { addEmployeeReducer } from './reducers/employee.reducer';
 import { Dropdown } from './widgets/dropdown';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 const routes: Routes = [
   {
@@ -54,7 +56,8 @@ const routes: Routes = [
         useHash: true,
         preloadingStrategy: PreloadAllModules
       }
-    )
+    ),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

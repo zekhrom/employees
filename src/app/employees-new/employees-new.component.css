@@ -5,7 +5,7 @@
   color: #dc3545;
 }
 
-input.ng-invalid.ng-touched {
+.ng-invalid.ng-touched {
   border-color: red;
 }
 

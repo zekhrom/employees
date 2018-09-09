@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
 import { FormBuilder, FormGroup, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { CommonService } from '../services/common.services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-employees-new',
@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EmployeesNewComponent implements OnInit {
   myForm: FormGroup;
-  isServices: true;
+  isServices: boolean = true;
   countries: string[];
   maxDate: string = (new Date).toISOString().substring(0, 10);
   hasTips: boolean;
@@ -25,7 +25,8 @@ export class EmployeesNewComponent implements OnInit {
   constructor(private store: Store<AppState>,
               private fb: FormBuilder,
               private commonService: CommonService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
 
     this.myForm = this.fb.group(
       {
@@ -142,6 +143,7 @@ export class EmployeesNewComponent implements OnInit {
       });
 
     }
+    this.router.navigate(['/']);
   }
 
   validateTips() {

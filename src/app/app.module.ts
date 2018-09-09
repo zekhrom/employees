@@ -12,6 +12,7 @@ import { addEmployeeReducer } from './reducers/employee.reducer';
 import { Dropdown } from './widgets/dropdown';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { EmployeesPipe } from './pipes/employees.pipes';
 
 const routes: Routes = [
   {
@@ -42,7 +43,8 @@ const routes: Routes = [
     AppComponent,
     EmployeesListComponent,
     EmployeesNewComponent,
-    Dropdown
+    Dropdown,
+    EmployeesPipe
   ],
   imports: [
     BrowserModule,

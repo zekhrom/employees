@@ -10,8 +10,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'dropdown',
   template: `
-    <select #select class="custom-select d-block w-100" id="{{controlName}}" disabled="{{disable}}" (change)="onChange($event, select.value)">
-      <option *ngFor="let option of options" value="{{option}}">{{option}}</option>
+    <select #select class="custom-select d-block w-100" id="{{controlName}}" disabled="{{disable}}" [value]="innerValue" (change)="onChange($event, select.value)">
+      <option *ngFor="let option of options" [ngValue]="option">{{option}}</option>
     </select>
     <div class="required-field" *ngFor="let error of errors">
       {{error}}
@@ -39,18 +39,24 @@ export class Dropdown implements ControlValueAccessor, AfterViewInit, AfterConte
   options: any[];
   errors: Array<any> = ['This field is required'];
   @ViewChild('select') inputRef: ElementRef; 
-  private innerValue: any = '';
+  innerValue: any = '';
 
   ngAfterContentInit() {
-    this.onChange(null, this.options.find((v, i) => { return i == 0 }));
+    if (this.inputRef.nativeElement.value == "" && this.c.value == "") {
+      this.onChange(null, this.options.find((v, i) => { return i == 0 }));
+    } else {
+      this.onChange(null, this.c.value);
+    }
   }
 
   ngAfterViewInit() {
     this.c.valueChanges.subscribe(
-      () => {
+      (v) => {
         if (this.c.value == "" || this.c.value == null || this.c.value == undefined) {
           this.innerValue = "";
           this.inputRef.nativeElement.value = "";
+        } else {
+          this.renderer.setValue(this.inputRef.nativeElement, v);
         }
       }
     );
@@ -102,13 +108,19 @@ export class Dropdown implements ControlValueAccessor, AfterViewInit, AfterConte
     if (changes.area != null) {
       if (changes.area.currentValue) {
         this.options = ["Manager", "Host", "Tuttofare", "Waitress", "Dinning room manager"];
-        this.renderer.setValue(this.inputRef.nativeElement, "Manager");
+        if (this.c.value == "")
+          this.renderer.setValue(this.inputRef.nativeElement, "Manager");
+        else
+          this.renderer.setValue(this.inputRef.nativeElement, this.c.value);
       } else {
         this.options = ["Chef", "Sous chef", "Dishwasher", "Cook"];
-        this.renderer.setValue(this.inputRef.nativeElement, "Chef");
+        if (this.c.value == "")
+          this.renderer.setValue(this.inputRef.nativeElement, "Chef");
+        else
+          this.renderer.setValue(this.inputRef.nativeElement, this.c.value);
       }
-      this.onChange(null, this.inputRef.nativeElement.value);
+      var value = this.c.value == "" ? this.inputRef.nativeElement.value : this.c.value;
+      this.onChange(null, value);
     }
-
   }
 }

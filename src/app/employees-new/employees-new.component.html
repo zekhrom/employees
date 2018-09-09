@@ -1,5 +1,5 @@
 <div class="col-md-10 order-md-1 mt-5">
-  <h4 class="mb-3">New Employee</h4>
+  <h4 class="mb-3">{{title}}</h4>
   <form class="needs-validation" [formGroup]="myForm">
     <div class="row">
       <div class="col-md-6 mb-3">
@@ -41,8 +41,8 @@
     <div class="row">
       <div class="col-md-6 mb-3">
         <label for="firstName">Country  </label>
-        <select class="custom-select d-block w-100"  formControlName="country" id="country">
-          <option *ngFor="let option of countries" value="option">{{option}}</option>
+        <select class="custom-select d-block w-100" formControlName="country" id="country">
+          <option *ngFor="let option of countries" value="{{option}}">{{option}}</option>
         </select>
         <div class="required-field" *ngIf="myForm.get('country').touched && myForm.get('country').invalid">
           Valid country is required.

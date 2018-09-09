@@ -11,9 +11,13 @@ import { Store } from '@ngrx/store';
 })
 export class EmployeesListComponent implements OnInit {
 
-  employees: Observable<Employee[]>;
+  employees: Employee[];
+  searchText: string;
+
   constructor(private store: Store<AppState>) {
-    this.employees = this.store.select(state => state.employee);
+    this.store.select(state => state.employee).subscribe((result) => {
+      this.employees = result;
+    });
   }
 
   deleteEmployee(id) {

@@ -14,7 +14,11 @@
       <td>{{employee.age}}</td>
       <td>{{employee.username}}</td>
       <td>{{employee.hireDate}}</td>
-      <td></td>
+      <td>
+        <a role="button" href="#/Edit/{{employee.id}}"><i class="material-icons" title="Edit">edit</i></a>
+        <a role="button" href="#/View/{{employee.id}}"><i class="material-icons" title="View">remove_red_eye</i></a>
+        <a role="button" href="#" (click)="deleteEmployee(employee.id)"><i class="material-icons" title="Delete">delete_outline</i></a>
+      </td>
     </tr>
   </tbody>
 </table>

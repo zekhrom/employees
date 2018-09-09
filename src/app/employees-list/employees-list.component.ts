@@ -16,6 +16,13 @@ export class EmployeesListComponent implements OnInit {
     this.employees = this.store.select(state => state.employee);
   }
 
+  deleteEmployee(id) {
+    this.store.dispatch({
+      type: 'DELETE',
+      payload: id
+    });
+  }
+
   ngOnInit() {
   }
 

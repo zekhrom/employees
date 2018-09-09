@@ -8,4 +8,6 @@ export interface Employee {
   country: string;
   username: string;
   hireDate: Date;
+  tipRate: number;
+  status: boolean;
 }

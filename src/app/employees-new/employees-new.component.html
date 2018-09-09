@@ -13,8 +13,8 @@
         <div class="mt-4">
           <label for="lastName">Area</label>
           <div class="btn-group col-md-8" role="group">
-            <button type="button" (click)="isServices = true" [ngClass]="{'focused-btn': isServices}" class="btn btn-secondary">Services</button>
-            <button type="button" (click)="isServices = false" [ngClass]="{'focused-btn': !isServices}" class="btn btn-secondary">Kitchen</button>
+            <button type="button" (change)="validateTips()" (click)="isServices = true" disabled="{{readOnly}}" [ngClass]="{'focused-btn': isServices}" class="btn btn-secondary">Services</button>
+            <button type="button" (change)="validateTips()" (click)="isServices = false" disabled="{{readOnly}}" [ngClass]="{'focused-btn': !isServices}" class="btn btn-secondary">Kitchen</button>
           </div>
         </div>
       </div>
@@ -33,10 +33,8 @@
       </div>
       <div class="col-md-6 mb-3">
         <label for="lastName">Job Title</label>
-        <dropdown name="jobTitle" formControlName="jobTitle" [c]="myForm.controls.jobTitle" controlName="jobTitle" (change)="validateTips()" [area]="isServices"></dropdown>
-        <div class="required-field" *ngIf="myForm.get('jobTitle').touched && myForm.get('jobTitle').invalid">
-          Valid job title is required.
-        </div>
+        <dropdown name="jobTitle" formControlName="jobTitle" [c]="myForm.controls.jobTitle" [disable]="readOnly" [controlName]="'jobTitle'" (change)="validateTips()" [area]="isServices"></dropdown>
+        
       </div>
     </div>
 

@@ -9,12 +9,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let employee of employees">
-      <th scope="row">employee.name</th>
-      <td>employee.age</td>
-      <td>employee.username</td>
-      <td>employee.hireDate</td>
-      <td>@mdo</td>
+    <tr *ngFor="let employee of employees | async">
+      <th scope="row">{{employee.name}}</th>
+      <td>{{employee.age}}</td>
+      <td>{{employee.username}}</td>
+      <td>{{employee.hireDate}}</td>
+      <td></td>
     </tr>
   </tbody>
 </table>

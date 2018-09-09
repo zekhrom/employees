@@ -43,7 +43,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    StoreModule.forRoot({ blockchain: addEmployeeReducer }),
+    StoreModule.forRoot({ employee: addEmployeeReducer }),
     RouterModule.forRoot(
       routes,
       {

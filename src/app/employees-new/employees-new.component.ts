@@ -76,6 +76,7 @@ export class EmployeesNewComponent implements OnInit {
         name: this.myForm.get('name').value,
         area: this.isServices,
         age: this.calculateAge(dob),
+        dob: this.myForm.get('dob').value,
         jobTitle: this.myForm.get('jobTitle').value,
         country: this.myForm.get('country').value,
         username: this.myForm.get('username').value,

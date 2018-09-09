@@ -3,6 +3,7 @@ export interface Employee {
   name: string;
   area: boolean;
   age: number;
+  dob: Date;
   jobTitle: string;
   country: string;
   username: string;

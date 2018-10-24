@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from '../models/employees';
 import { Store } from '@ngrx/store';
-import { AppState } from '../app.state';
 import { FormBuilder, FormGroup, FormControl, ValidatorFn, Validators } from '@angular/forms';
-import { CommonService } from '../services/common.services';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Employee } from '../../modules/models/employees';
+import { AppState } from '../../app.state';
+import { CommonService } from '../../modules/services/common.services';
 
 @Component({
   selector: 'app-employees-new',
@@ -12,8 +12,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./employees-new.component.css'],
   providers: [CommonService]
 })
-export class EmployeesNewComponent implements OnInit {
+export class EmployeesNewComponent {
   title: string = "New Employee";
+  employee: Employee = {};
   myForm: FormGroup;
   isServices: boolean = true;
   countries: string[];
@@ -46,9 +47,7 @@ export class EmployeesNewComponent implements OnInit {
       }
     );
 
-    this.commonService.getCountries().then((data) => {
-      this.countries = data.map((data) => { return data.name.toString() });
-    });
+    this.commonService.getCountries().then(data =>  this.countries = data.map((data) => { return data.name.toString() }));
 
     if (this.route.snapshot.paramMap.has('id')) {
       this.id = +this.route.snapshot.paramMap.get('id');
@@ -71,31 +70,14 @@ export class EmployeesNewComponent implements OnInit {
 
   setEmployee(id: number) {
     this.store.select(state => state.employee).subscribe((employees) => {
-      var employee = employees.find(item => { return item.id == id });
-      if (employee != null) {
-        this.myForm.setValue({
-          name: employee.name,
-          dob: employee.dob,
-          jobTitle: employee.jobTitle,
-          country: employee.country,
-          username: employee.username,
-          hireDate: employee.hireDate,
-          tipRate: employee.tipRate,
-          status: employee.status,
-        });
-        this.title = employee.name;
-        this.selectedCountry = employee.country;
-        this.myForm.get('country').setValue(this.selectedCountry, { emitEvent: false });
-      } else {
-        this.router.navigate(['/']);
-      }
+      this.employee = employees.find(item => { return item.id == id });
     });
   }
 
   validateAge(): ValidatorFn {
     return (formGroup: FormGroup) => {
-      var dobControl = formGroup.get('dob');
-      var dob = new Date(dobControl.value);
+      let dobControl = formGroup.get('dob');
+      let dob = new Date(dobControl.value);
       if (this.calculateAge(dob) < 18) {
         return {
           validAge: false
@@ -167,12 +149,6 @@ export class EmployeesNewComponent implements OnInit {
       tipControl.setValidators([Validators.required, Validators.max(100), Validators.min(0)]);
     }
     tipControl.updateValueAndValidity();
-  }
-
-  ngOnInit() {
-    this.myForm.get('country').valueChanges.subscribe((v) => {
-      console.log(v);
-    })
   }
 
 }

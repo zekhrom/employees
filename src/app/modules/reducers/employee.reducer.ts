@@ -12,12 +12,7 @@ export function addEmployeeReducer(state: Employee[] = [], action) {
       return [...state, action.payload];
     case EDIT:
       const item = action.payload;
-      return state.map(value => {
-        if (value.id == item.id)
-          return item as Employee;
-
-        return value;
-      });
+      return state.map(value => { value.id == item.id ? item as Employee : value });
     case DELETE:
       const itemId = action.payload;
       return state.filter(item => item.id !== itemId);

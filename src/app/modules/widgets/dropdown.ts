@@ -39,7 +39,7 @@ export class Dropdown implements ControlValueAccessor, AfterViewInit, AfterConte
   options: any[];
   errors: Array<any> = ['This field is required'];
   @ViewChild('select') inputRef: ElementRef; 
-  innerValue: any = '';
+  @Input() innerValue: any = '';
 
   ngAfterContentInit() {
     if (this.inputRef.nativeElement.value == "" && this.c.value == "") {

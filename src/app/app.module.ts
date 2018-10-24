@@ -6,13 +6,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { EmployeesListComponent } from './employees-list/employees-list.component';
-import { EmployeesNewComponent } from './employees-new/employees-new.component';
-import { addEmployeeReducer } from './reducers/employee.reducer';
-import { Dropdown } from './widgets/dropdown';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-import { EmployeesPipe } from './pipes/employees.pipes';
+import { EmployeesListComponent } from './components/employees-list/employees-list.component';
+import { EmployeesNewComponent } from './components/employees-new/employees-new.component';
+import { Dropdown } from './modules/widgets/dropdown';
+import { EmployeesPipe } from './modules/pipes/employees.pipes';
+import { addEmployeeReducer } from './modules/reducers/employee.reducer';
+import { environment } from '../environments/environment.prod';
 
 const routes: Routes = [
   {

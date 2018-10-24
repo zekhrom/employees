@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-md-6 mb-3">
         <label for="firstName">Name </label>
-        <input type="text" class="form-control" id="name" formControlName="name" placeholder="Name" required>
+        <input type="text" class="form-control" id="name" formControlName="name" [(ngModel)]="employee.name" placeholder="Name" required>
         <div class="required-field" *ngIf="myForm.get('name').touched && myForm.get('name').invalid">
           Valid first name is required.
         </div>
@@ -23,7 +23,7 @@
     <div class="row">
       <div class="col-md-6 mb-3">
         <label for="firstName">Dob  </label>
-        <input type="date" class="form-control" id="dob" formControlName="dob" max="{{maxDate}}" required>
+        <input type="date" class="form-control" id="dob" [(ngModel)]="employee.dob" formControlName="dob" max="{{maxDate}}" required>
         <div class="required-field" *ngIf="myForm.get('dob').touched && myForm.get('dob').invalid">
           Valid date of birth is required.
         </div>
@@ -33,7 +33,7 @@
       </div>
       <div class="col-md-6 mb-3">
         <label for="lastName">Job Title</label>
-        <dropdown name="jobTitle" formControlName="jobTitle" [c]="myForm.controls.jobTitle" [disable]="readOnly" [controlName]="'jobTitle'" (change)="validateTips()" [area]="isServices"></dropdown>
+        <dropdown name="jobTitle" formControlName="jobTitle" [c]="myForm.controls.jobTitle" [disable]="readOnly" [innerValue]="employee.jobTitle" [controlName]="'jobTitle'" (change)="validateTips()" [area]="isServices"></dropdown>
         
       </div>
     </div>
@@ -41,7 +41,7 @@
     <div class="row">
       <div class="col-md-6 mb-3">
         <label for="firstName">Country  </label>
-        <select class="custom-select d-block w-100" formControlName="country" id="country">
+        <select class="custom-select d-block w-100" [(ngModel)]="employee.country" formControlName="country" id="country">
           <option *ngFor="let option of countries" value="{{option}}">{{option}}</option>
         </select>
         <div class="required-field" *ngIf="myForm.get('country').touched && myForm.get('country').invalid">
@@ -54,7 +54,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">@</span>
           </div>
-          <input type="text" class="form-control" id="username" formControlName="username" placeholder="Username" required>
+          <input type="text" class="form-control" id="username" [(ngModel)]="employee.username" formControlName="username" placeholder="Username" required>
           <div class="required-field" style="width: 100%;" *ngIf="myForm.get('username').touched && myForm.get('username').errors != null && myForm.get('username').errors.required">
             Your username is required.
           </div>
@@ -68,7 +68,7 @@
     <div class="row">
       <div class="col-md-6 mb-3">
         <label for="firstName">Hire Date </label>
-        <input type="date" class="form-control" id="hireDate" formControlName="hireDate" required>
+        <input type="date" class="form-control" id="hireDate" [(ngModel)]="employee.hireDate" formControlName="hireDate" required>
         <div class="required-field" *ngIf="myForm.get('hireDate').touched && myForm.get('hireDate').invalid">
           Valid hire date is required.
         </div>
@@ -79,7 +79,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">%</span>
           </div>
-          <input type="number" class="form-control" id="tipRate" max="100" min="0" formControlName="tipRate" required>
+          <input type="number" class="form-control" id="tipRate" [(ngModel)]="employee.tipRate" max="100" min="0" formControlName="tipRate" required>
           <div class="required-field" style="width: 100%;" *ngIf="myForm.get('tipRate').touched && myForm.get('tipRate').invalid">
             Your tip rate is required.
           </div>
@@ -90,7 +90,7 @@
     <div class="row">
       <div class="col-md-6 mb-3">
         <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" formControlName="status" id="status">
+          <input type="checkbox" class="custom-control-input" [(ngModel)]="employee.status" formControlName="status" id="status">
           <label class="custom-control-label" for="status">Status</label>
         </div>
       </div>
